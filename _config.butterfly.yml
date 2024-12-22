@@ -56,12 +56,12 @@ social:
 # --------------------------------------
 
 # 网站的 favicon 图标
-favicon: /img/favicon.png
+favicon: https://s21.ax1x.com/2024/12/22/pAX098x.jpg
 
 # 头像设置
 avatar:
   # 头像图片链接
-  img: https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png
+  img: https://s21.ax1x.com/2024/12/22/pAX098x.jpg
   # 是否启用头像效果（头像会一直转圈）
   effect: true 
 
@@ -69,13 +69,13 @@ avatar:
 disable_top_img: false
 
 # 如果页面未设置横幅，则显示默认的横幅图片
-default_top_img:
+default_top_img: https://s21.ax1x.com/2024/12/22/pAXdASK.jpg
 
 # 主页的横幅图片
-index_img:
+index_img: https://s21.ax1x.com/2024/12/22/pAXw4Ej.jpg
 
 # 归档页的横幅图片
-archive_img:
+archive_img: https://s21.ax1x.com/2024/12/22/pAXdASK.jpg
 
 # 注意: 是标签页（单个标签），不是标签页面（所有标签）
 tag_img:
@@ -113,10 +113,17 @@ cover:
   position: both
   # 当未设置封面时，显示默认封面
   default_cover:
-  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png
-  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png
-  - https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png
-
+  - https://i.111666.best/image/aVaf6pI2RJZshxiUicdsaU.jpg
+  - https://i.111666.best/image/EBnCRLwQ8H8UUakOhF5v2r.jpg
+  - https://i.111666.best/image/gvp4dtT3W8XXrmcEciAWlV.jpg
+  - https://i.111666.best/image/OeT3AyND6KPhCcTyrGAcWR.jpg
+  - https://i.111666.best/image/7IMrYp83aSZI94u4z2JvX1.jpg
+  - https://s21.ax1x.com/2024/08/09/pASuIyD.webp
+  - https://i.111666.best/image/LT5bLgq2ITwht8Z9HlSE2v.jpg
+  - https://i.111666.best/image/1nYhZoEMpA459x1ODo0m8n.jpg
+  - https://pic.imgdb.cn/item/66b9fce0d9c307b7e9299287.jpg
+  - https://pic.imgdb.cn/item/66b9fce1d9c307b7e9299324.jpg
+  - https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg
 
 # 替换损坏的图片
 error_img:
@@ -341,7 +348,7 @@ aside:
       # 按钮文本
       text: Follow Me
       # 按钮链接
-      link: https://github.com/xxxxxx
+      link: https://github.com/sicnutaolei
   card_announcement:
     # 是否显示公告卡片
     enable: true

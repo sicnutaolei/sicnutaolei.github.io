@@ -36,3 +36,6 @@ tags:
 4.  使用 git commit -m "..."提交暂存区的修改，其中...是提交的描述信息
 5.  使用 git push origin hexo将本地仓库的修改推送到远程仓库的hexo分支上
 6.  使用 hexo g -d生成并部署网站到GitHub Pages上（master分支）
+
+## npm安装主题后的问题
+1. 因为我的记性不太好，配置博客主题这件事我又不经常做，所以很容易就会把配置的关键步骤忘记。对于Butterfly而言，我是通过npm下来的，它的配置文件在\node_modules\hexo-theme-butterfly，这是最详实的配置文件，如果要对主题进行修改，不要直接修改\node_modules\hexo-theme-butterfly里的文件，要把里面的配置复制到blog根目录下的source文件夹里面的_config.butterfly.yml 中。
