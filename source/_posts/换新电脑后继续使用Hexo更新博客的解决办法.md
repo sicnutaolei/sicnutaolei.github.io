@@ -22,10 +22,17 @@ tags:
 1.  依次执行git add .、git commit -m "..."、git push origin hexo指令将改动推送到GitHub（此时当前分支应为hexo）2.  然后才执行hexo g -d发布网站到master分支上。
     虽然两个过程顺序调转一般不会有问题，不过逻辑上这样的顺序是绝对没问题的（例如突然死机要重装了，悲催....的情况，调转顺序就有问题了）。
 ## 本地资料丢失后的流程当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：
-1. 使用git clone git@github.com:CrazyMilk/CrazyMilk.github.io.git拷贝仓库（默认分支为hexo）；
-2. 在本地新拷贝的http://CrazyMilk.github.io文件夹下通过Git bash依次执行下列指令：
+1. 使用git clone git@github.com:sicnutaolei/sicnutaolei.github.io.git拷贝仓库（默认分支为hexo）；
+2. 在本地新拷贝的http://sicnutaolei.github.io文件夹下通过Git bash依次执行下列指令：
 ```bash
     npm install hexo
     npm install
     npm install hexo-deployer-git #（记得，不需要hexo init这条指令）
 ```
+## 本机使用方法提示
+1.  本地目录 D:\hexo\backup\sicnutaolei.github.io 
+2.  使用 hexo new 新文章 创建新的文章
+3.  使用 git add .将当前目录下所有修改过的文件添加到 Git 的暂存区中
+4.  使用 git commit -m "..."提交暂存区的修改，其中...是提交的描述信息
+5.  使用 git push origin hexo将本地仓库的修改推送到远程仓库的hexo分支上
+6.  使用 hexo g -d生成并部署网站到GitHub Pages上（master分支）
