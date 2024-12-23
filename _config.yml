@@ -5,11 +5,11 @@
 # Site
 title: Tao's NoteBook
 subtitle: '一个私人笔记本'
-description: '年纪大了容易忘事，做过的事情，学过的知识一定要使用某种载体记录下来，包括各种密码都不能完全相信自己的脑袋了。'
+description: '年纪大了，小笔记本就能派上用场了。'
 keywords:
 author: Tao Doe
 language: zh-CN
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
