@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>开源免费的跨平台文件同步工具-Syncthing | Tao's NoteBook</title><meta name="author" content="Tao Doe"><meta name="copyright" content="Tao Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开源免费的跨平台文件同步工具 - Syncthing 多设备同步文件可以说是 NAS 必备的一个功能，作为 24 小时开机的设备，通过 NAS 来同步文件，可以做到不管其他终端是否在线，也能实时保持同步。推荐直接使用 Syncthing 来实现多端同步。 用法 用它来把电脑的截图同步到手机相册，电脑端直接截图保存，手机端直接访问相册就能发送。 把电脑端的 Calibre 书库同步到 NAS 端的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开源免费的跨平台文件同步工具-Syncthing">
+<meta property="og:url" content="https://sicnutaolei.github.io/2024/12/24/%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing/index.html">
+<meta property="og:site_name" content="Tao&#39;s NoteBook">
+<meta property="og:description" content="开源免费的跨平台文件同步工具 - Syncthing 多设备同步文件可以说是 NAS 必备的一个功能，作为 24 小时开机的设备，通过 NAS 来同步文件，可以做到不管其他终端是否在线，也能实时保持同步。推荐直接使用 Syncthing 来实现多端同步。 用法 用它来把电脑的截图同步到手机相册，电脑端直接截图保存，手机端直接访问相册就能发送。 把电脑端的 Calibre 书库同步到 NAS 端的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg">
+<meta property="article:published_time" content="2024-12-24T12:19:35.000Z">
+<meta property="article:modified_time" content="2024-12-24T13:23:58.763Z">
+<meta property="article:author" content="Tao Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg"><link rel="shortcut icon" href="https://s21.ax1x.com/2024/12/22/pAX098x.jpg"><link rel="canonical" href="https://sicnutaolei.github.io/2024/12/24/%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f0842a341692f7470b9a56afb35e41ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '开源免费的跨平台文件同步工具-Syncthing',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://s21.ax1x.com/2024/12/22/pAX098x.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Tao's NoteBook</span></a><a class="nav-page-title" href="/"><span class="site-name">开源免费的跨平台文件同步工具-Syncthing</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/search/"><i class="fa-fw fas fa-search"></i><span> 搜索</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">开源免费的跨平台文件同步工具-Syncthing</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-24T12:19:35.000Z" title="发表于 2024-12-24 20:19:35">2024-12-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-12-24T13:23:58.763Z" title="更新于 2024-12-24 21:23:58">2024-12-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:30,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2024-12-24 21:23:58&quot;}" hidden></div><h2 id="开源免费的跨平台文件同步工具-Syncthing"><a href="#开源免费的跨平台文件同步工具-Syncthing" class="headerlink" title="开源免费的跨平台文件同步工具 - Syncthing"></a>开源免费的跨平台文件同步工具 - Syncthing</h2><p><img src="https://img.slarker.me/wiki/e310d62f71fd4b8eaf65461e6e437fb9.png" alt="软件截图"></p>
+<p>多设备同步文件可以说是 NAS 必备的一个功能，作为 24 小时开机的设备，通过 NAS 来同步文件，可以做到不管其他终端是否在线，也能实时保持同步。推荐直接使用 Syncthing 来实现多端同步。</p>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><ol>
+<li>用它来把电脑的截图同步到手机相册，电脑端直接截图保存，手机端直接访问相册就能发送。</li>
+<li>把电脑端的 Calibre 书库同步到 NAS 端的 calibre-Web，可以随时在想看某本书的时候，一键推送到 Kindle.</li>
+<li>把电脑的常用文档以及音乐库同步到 NAS 以及各个终端，即便在无网络的时候也能随时编辑文档，听喜欢的音乐。</li>
+</ol>
+<h2 id="功能对比"><a href="#功能对比" class="headerlink" title="功能对比"></a>功能对比</h2><p>相比 Synology Drive，Syncthing 利用 P2P 技术来传输文件，不需要设置内网穿透，只要添加好远程设备，即便不在一个局域网里也可以自动连接。但这有时候也是一个缺点，需要依靠发现服务器才能建立连接，而国内的发现服务器较少，所以连接起来有时候会比较慢。好在可以通过自建中继和发现服务器来解决这个问题。<br><img src="https://img.slarker.me/wiki/07dff7385de64be4adf7e3c6dabb0792.png" alt="软件截图"></p>
+<h2 id="如何使用-Syncthing"><a href="#如何使用-Syncthing" class="headerlink" title="如何使用 Syncthing"></a>如何使用 Syncthing</h2><p>在 fnOS 上安装 Docker 版 Syncthing<br>在 fnOS 上打开应用商店，搜索 Syncthing，点击安装。<br><img src="https://s2.loli.net/2024/12/24/aVAChNH4E1jWUos.webp" alt="alt text"></p>
+<p>设置密码，其它都保持默认，点击确认，设置好之后点击打开就可以启动了。</p>
+<p>默认的端口是 8384。你可以使用 fnOS IP:8384 来访问 Syncthing 的 WebUI。打开 Syncthing 之后，可以先设置密码，然后移除默认的文件夹（Default Folder）。</p>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>Syncthing 支持 Windows（推荐使用 SyncTrayzor），macOS，Linux，Android，可以到 官网 或者应用市场下载。</p>
+<p>iOS 没有官方的 App，可以使用第三方开源的客户端 Synctrain。</p>
+<h2 id="添加设备-ID"><a href="#添加设备-ID" class="headerlink" title="添加设备 ID"></a>添加设备 ID</h2><p>每个设备安装 Syncthing 之后都会有一个唯一的 设备 ID，当前设备的 ID 在 操作 -&gt; 显示 ID 中可以看到。要想同步文件，需要先互相添加远程设备 ID，类似于添加好友。比如我在 fnOS 的 Syncthing 中添加 Windows 的设备 ID，设备名 可以自己起一个容易区分的名字。</p>
+<p>添加之后，在 Windows 中也会有提示添加 fnOS 的设备 ID。添加完成之后，就会显示已连接（未使用）。</p>
+<h2 id="文件夹同步"><a href="#文件夹同步" class="headerlink" title="文件夹同步"></a>文件夹同步</h2><p>比如我想把 Windows 上的文件夹同步到 NAS 里，那就先在 Windows 的 Syncthing 中添加一个本地文件夹（比如 PixPinAutoSave，实际路径 D:\照片\PixPinAutoSave ），然后在这个文件夹中设置共享给 fnOS 这个设备。<br><img src="https://s2.loli.net/2024/12/24/UhkjGtiwplWDN8x.webp" alt="alt text"></p>
+<p>保存后，在 fnOS 端就可以看到一个共享文件夹的请求：</p>
+<p>点击添加，将文件夹路径设置为 Syncthing 容器中映射的 &#x2F;vol1&#x2F;1000&#x2F;Syncthing&#x2F;截图。</p>
+<p>设置好之后，点击保存，同步就会自动开始。fnOS 上的 截图 会和 Windows 上的 截图 保持实时同步。</p>
+<p>版本控制<br>除了基本的同步功能外，Syncthing 还支持文件版本控制，非常适合有版本管理需求的用户：</p>
+<p>如果你想防止误删文件，可以在 NAS 上的 Syncthing 中将版本控制设置为 回收站文件版本控制 模式。</p>
+<p>当你在其他设备中（比如 macOS）删除文件时，NAS 端会将删除的文件移动到 .stversions 目录，在 fnOS 的文件管理器中可以直接看到 .stversions 目录中被删除的文件。</p>
+<p>如果你想恢复某个版本的文件，可以直接在 历史版本 中按具体时间恢复到某个版本。</p>
+<p>其它特性<br>此外，还可以设置文件夹类型（发送和接受，仅发送，仅接受），可以应对更多的场景。</p>
+<p>比如，我只想给其他人共享文件，不想接受别人对文件的修改，就可以用 仅发送 模式。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://sicnutaolei.github.io">Tao Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sicnutaolei.github.io/2024/12/24/%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing/">https://sicnutaolei.github.io/2024/12/24/开源免费的跨平台文件同步工具-Syncthing/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sicnutaolei.github.io" target="_blank">Tao's NoteBook</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/12/24/%E5%BC%80%E6%BA%90Windows%E5%89%AA%E5%88%87%E6%9D%BF%E7%AE%A1%E7%90%86%E5%99%A8-Ditto/" title="开源Windows剪切板管理器-Ditto"><img class="cover" src="https://pic.imgdb.cn/item/66b9fce1d9c307b7e9299324.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">开源Windows剪切板管理器-Ditto</div></div><div class="info-2"><div class="info-item-1">软件介绍Ditto是一个开源免费的Windows剪切板管理工具，他可以记录你复制（Ctrl + C ）的所有内容，包括文本、图像、html、自定义格式，等等。支持搜索功能，当你使用该软件很长时间了，想要寻找之前的复制粘贴内容，只需要在窗口内搜索一下即可！！ 软件截图 </div></div></div></a><a class="pagination-related" href="/2024/12/24/%E4%B8%80%E6%AC%BE%E7%AE%80%E5%8D%95%E5%85%8D%E8%B4%B9%E7%9A%84%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-CrystalDiskMark8/" title="一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8"><img class="cover" src="https://s21.ax1x.com/2024/08/09/pASuIyD.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8</div></div><div class="info-2"><div class="info-item-1">CrystalDiskMark 是一款简单免费的硬盘读写速度测试软件 ，新买的硬盘可以用它来测测你硬盘速度是否达标！ 软件支持简体中文，如果你下载的是安装版本，安装的时候选择英文语言即可，安装后会默认显示中文。 CrystalDiskMark 有很多不同主题的版本，我这里给大家下载的两个版本是都是二次元的，挺好看的。分别是：Aoi和Shizuku 两个版本。 [下载地址]https://pan.quark.cn/s/b07ba644506e </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://s21.ax1x.com/2024/12/22/pAX098x.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Tao Doe</div><div class="author-info-description">年纪大了，小笔记本就能派上用场了。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/sicnutaolei"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/sicnutaolei" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:susetaolei@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing"><span class="toc-number">1.</span> <span class="toc-text">开源免费的跨平台文件同步工具 - Syncthing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">功能对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Syncthing"><span class="toc-number">4.</span> <span class="toc-text">如何使用 Syncthing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%AE%BE%E5%A4%87-ID"><span class="toc-number">6.</span> <span class="toc-text">添加设备 ID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8C%E6%AD%A5"><span class="toc-number">7.</span> <span class="toc-text">文件夹同步</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/12/24/%E5%BC%80%E6%BA%90Windows%E5%89%AA%E5%88%87%E6%9D%BF%E7%AE%A1%E7%90%86%E5%99%A8-Ditto/" title="开源Windows剪切板管理器-Ditto"><img src="https://pic.imgdb.cn/item/66b9fce1d9c307b7e9299324.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开源Windows剪切板管理器-Ditto"/></a><div class="content"><a class="title" href="/2024/12/24/%E5%BC%80%E6%BA%90Windows%E5%89%AA%E5%88%87%E6%9D%BF%E7%AE%A1%E7%90%86%E5%99%A8-Ditto/" title="开源Windows剪切板管理器-Ditto">开源Windows剪切板管理器-Ditto</a><time datetime="2024-12-24T13:21:11.000Z" title="发表于 2024-12-24 21:21:11">2024-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/24/%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing/" title="开源免费的跨平台文件同步工具-Syncthing"><img src="https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开源免费的跨平台文件同步工具-Syncthing"/></a><div class="content"><a class="title" href="/2024/12/24/%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E7%9A%84%E8%B7%A8%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-Syncthing/" title="开源免费的跨平台文件同步工具-Syncthing">开源免费的跨平台文件同步工具-Syncthing</a><time datetime="2024-12-24T12:19:35.000Z" title="发表于 2024-12-24 20:19:35">2024-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/24/%E4%B8%80%E6%AC%BE%E7%AE%80%E5%8D%95%E5%85%8D%E8%B4%B9%E7%9A%84%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-CrystalDiskMark8/" title="一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8"><img src="https://s21.ax1x.com/2024/08/09/pASuIyD.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8"/></a><div class="content"><a class="title" href="/2024/12/24/%E4%B8%80%E6%AC%BE%E7%AE%80%E5%8D%95%E5%85%8D%E8%B4%B9%E7%9A%84%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-CrystalDiskMark8/" title="一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8">一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8</a><time datetime="2024-12-24T12:19:24.000Z" title="发表于 2024-12-24 20:19:24">2024-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/23/%E7%94%B5%E8%84%91%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94%E7%BD%91%E6%98%93UU%E8%BF%9C%E7%A8%8B/" title="电脑远程控制工具——网易UU远程"><img src="https://i.111666.best/image/aVaf6pI2RJZshxiUicdsaU.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="电脑远程控制工具——网易UU远程"/></a><div class="content"><a class="title" href="/2024/12/23/%E7%94%B5%E8%84%91%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94%E7%BD%91%E6%98%93UU%E8%BF%9C%E7%A8%8B/" title="电脑远程控制工具——网易UU远程">电脑远程控制工具——网易UU远程</a><time datetime="2024-12-23T12:55:36.000Z" title="发表于 2024-12-23 20:55:36">2024-12-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/12/22/%E6%8D%A2%E6%96%B0%E7%94%B5%E8%84%91%E5%90%8E%E7%BB%A7%E7%BB%AD%E4%BD%BF%E7%94%A8Hexo%E6%9B%B4%E6%96%B0%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="换新电脑后继续使用Hexo更新博客的解决办法"><img src="https://pic.imgdb.cn/item/66b9fce1d9c307b7e92993d7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="换新电脑后继续使用Hexo更新博客的解决办法"/></a><div class="content"><a class="title" href="/2024/12/22/%E6%8D%A2%E6%96%B0%E7%94%B5%E8%84%91%E5%90%8E%E7%BB%A7%E7%BB%AD%E4%BD%BF%E7%94%A8Hexo%E6%9B%B4%E6%96%B0%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="换新电脑后继续使用Hexo更新博客的解决办法">换新电脑后继续使用Hexo更新博客的解决办法</a><time datetime="2024-12-22T12:31:18.000Z" title="发表于 2024-12-22 20:31:18">2024-12-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Tao Doe</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://sicnutaolei.github.io/">notebook</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
