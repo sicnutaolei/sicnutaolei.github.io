@@ -1,3 +1,8 @@
+---
+title: Linux学习记录（一）
+date: 2025-01-09 21:26:30
+tags:
+---
 ___
 
 ![linux](https://www.runoob.com/wp-content/uploads/2014/06/linux.jpg)
