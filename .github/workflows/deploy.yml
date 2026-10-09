@@ -1,0 +1,65 @@
+name: 构建并部署到 GitHub Pages
+
+# 触发：源分支 hexo 有推送，或手动触发。
+# 产物推送到 master 分支，Pages 已配置为从 master 根目录发布，因此本 workflow 不碰 Pages 设置。
+# 只监听 hexo、且提交信息带 [skip ci]，不会与 master 上的推送互相触发。
+on:
+  push:
+    branches: [hexo]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci --no-audit --no-fund
+
+      # 热力图数据 source/data/contrib.json 需要在本地用 gh 凭证刷新后提交，
+      # CI 里的 GITHUB_TOKEN 是仓库安装身份，viewer 查不到你的个人贡献数据。
+      - name: 检查贡献数据新鲜度
+        run: |
+          if [ -f source/data/contrib.json ]; then
+            echo "contrib.json 生成于 $(node -e "console.log(require('./source/data/contrib.json').generated)")"
+          else
+            echo "::warning::缺少 source/data/contrib.json，about 页热力图将不显示"
+          fi
+
+      - name: 构建站点
+        run: npx hexo generate
+
+      - name: 发布 public 到 master
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          DEST=/tmp/gh-master
+          git clone --depth 1 --branch master "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          find "$DEST" -mindepth 1 -maxdepth 1 -not -name .git -exec rm -rf {} +
+          cp -r public/. "$DEST"/
+          cd "$DEST"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "无变化，跳过发布"
+            exit 0
+          fi
+          git commit -m "Site updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC') [skip ci]"
+          git push origin master
