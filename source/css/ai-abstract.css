@@ -1,0 +1,26 @@
+/* 文章正文顶部的 AI 摘要块，由 scripts/ai-abstract.js 注入 */
+.ai-abstract {
+  margin: 0 0 22px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--theme, #009688);
+  background: var(--card-bg, rgba(128, 128, 128, 0.07));
+  border-radius: 0 6px 6px 0;
+}
+
+.ai-abstract-label {
+  display: block;
+  font-size: 0.75em;
+  letter-spacing: 0.08em;
+  color: var(--theme, #009688);
+  margin-bottom: 6px;
+}
+
+.ai-abstract p {
+  margin: 0;
+  line-height: 1.8;
+  color: var(--font-color, #4e4e4e);
+}
+
+[data-theme="dark"] .ai-abstract {
+  background: var(--card-bg, rgba(255, 255, 255, 0.05));
+}

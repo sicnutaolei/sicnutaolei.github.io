@@ -34,6 +34,12 @@ npm run publish -- -m "记录了 xxx"
 
 其它参数：`--dry` 只演练不写不推；`--skip-ai` / `--skip-contrib` 跳过对应步骤；`--force` 见下；不带 `-m` 时用时间戳做提交信息。
 
+### 摘要显示在哪里
+
+`description` 有两个落点：首页/归档页的卡片摘要（主题 `index_post_content.method: 2` 决定），以及**文章正文顶部的「AI 摘要」块**——后者由 `scripts/ai-abstract.js` 在渲染后注入，样式在 `source/css/ai-abstract.css`，通过 `_config.butterfly.yml` 的 `inject.head` 挂载。Butterfly 原生不会把 `description` 显示在正文里，别以为改个配置就有了。
+
+没写 `description` 的文章不会渲染这个块，页面保持原样。这个目录是 Hexo 的自动加载目录且必须是 CommonJS，别往里塞 `.mjs`。
+
 ### 草稿保护
 
 发布脚本内部用 `git add -A`，会把工作区里的一切一并提交，所以必须有这道闸：**凡本次涉及的文章，去掉 front-matter 后正文不足 60 字的直接中止**，并列出是哪几篇、各有多少字。确实要发布草稿时再加 `--force`，阈值可用 `--min-body 200` 调高。`npm run gen:ai` 里有同样判定，不会给空草稿白烧 tokens。
