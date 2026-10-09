@@ -14,6 +14,7 @@ menu:
   首页: / || fas fa-home
   关于: /about/ || fas fa-user
   友链: /link/ || fas fa-link
+  申请友链: "https://github.com/sicnutaolei/sicnutaolei.github.io/issues/new?template=friend-request.yml || fas fa-handshake"
   # 归档: /archives/ || fas fa-archive
   # 标签: /tags/ || fas fa-tags
   # 分类: /categories/ || fas fa-folder
@@ -218,7 +219,9 @@ index_layout: 3
 # 3: 自动摘要（默认）
 # false: 不显示文章简介
 index_post_content:
-  method: 3
+  # 1=只用 description，2=有 description 就用、没有则截断正文，3=只截断正文
+  # 文章 front-matter 里的 description 由 npm run gen:ai 生成
+  method: 2
   # 如果设置 method 为 2 或 3，需要配置长度
   length: 500
 
