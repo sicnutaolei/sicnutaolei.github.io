@@ -6,6 +6,7 @@
 
 | 命令 | 作用 |
 |---|---|
+| `npm run new -- 标题` | 新建文章（本机没有全局 hexo，别直接敲 `hexo new`） |
 | `npm run publish` | 一键发文：摘要 + 热力图数据 + 构建自检 + 推送 + 盯 CI |
 | `npm run gen:ai` | 只补文章 AI 摘要（增量，需 `DOTS_API_KEY` 环境变量） |
 | `npm run gen:contrib` | 只刷新关于页贡献热力图数据（需本机 `gh` 已登录） |

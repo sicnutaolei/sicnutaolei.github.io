@@ -11,10 +11,21 @@
 
 Pages 设置指向 `master`，切默认分支或改 Pages 来源会让站点直接下线（2026 年初那次"荒废"就是这么来的）。
 
+## 本机没有全局 hexo
+
+这台机器上**没有安装全局 `hexo`**，直接敲 `hexo new` 会报"不是内部或外部命令"。Hexo 是仓库的本地依赖（`hexo@7.3.0`，自带 `hexo-cli@4.3.2`），有两种正确用法：
+
+```powershell
+npm run new -- 文章标题       # 推荐，已加进 package.json
+npx hexo new 文章标题          # 等价，npx 会用 node_modules/.bin 里的 hexo
+```
+
+npm 脚本里可以直接写裸 `hexo`（npm 会把 `node_modules/.bin` 临时加入 PATH），所以 `npm run build` / `npm run server` / `npm run clean` 都能正常工作。想彻底摆脱 `npx`/`npm run` 前缀，可以自行 `npm i -g hexo-cli`，但没有任何必要。
+
 ## 日常发文
 
 ```powershell
-hexo new 文章标题
+npm run new -- 文章标题
 $env:DOTS_API_KEY = "<你的 Dots key>"   # 可选，不设就跳过摘要
 npm run publish -- -m "记录了 xxx"
 ```

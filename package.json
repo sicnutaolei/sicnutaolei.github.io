@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "build": "hexo generate",
+    "new": "hexo new",
     "clean": "hexo clean",
-    "deploy": "hexo deploy",
     "server": "hexo server",
+    "deploy": "hexo deploy",
     "gen:contrib": "node tools/gen-contrib.mjs",
     "gen:ai": "node tools/gen-ai-summary.mjs",
     "publish": "node tools/publish.mjs"
