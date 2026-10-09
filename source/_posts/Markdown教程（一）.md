@@ -2,6 +2,7 @@
 title: Markdown教程（一）
 date: 2025-01-09 23:36:28
 tags:
+description: "覆盖段落、列表嵌套、代码块、表格对齐与数学公式的 Markdown 写法，并给出 VSCode 实时预览的配置步骤。"
 ---
 # Markdown基础
 

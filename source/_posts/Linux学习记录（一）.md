@@ -2,6 +2,7 @@
 title: Linux学习记录（一）
 date: 2025-01-09 21:26:30
 tags:
+description: "梳理Linux标准目录结构各自的用途，配 chmod/chown/chgrp 修改权限的具体命令示例，附常用命令缩写的全称对照。"
 ---
 ___
 

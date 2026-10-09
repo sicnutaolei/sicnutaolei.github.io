@@ -2,6 +2,7 @@
 title: 使用Hexo搭建高效博客，零成本记录冲浪生活
 date: 2024-12-22 19:23:45
 tags:
+description: "通过Hexo+GitHub+Cloudflare免费搭建博客，配置Node.js与Git环境，初始化项目后部署至Pages实现自动化发布，支持Markdown写作与本地预览。"
 ---
 [本文来源](https://blog.kingxujw.com/categories/%E6%96%87%E7%AB%A0/)
 

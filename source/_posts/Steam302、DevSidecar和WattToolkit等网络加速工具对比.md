@@ -2,6 +2,7 @@
 title: Steam302、DevSidecar和WattToolkit等网络加速工具对比
 date: 2025-01-01 20:10:43
 tags:
+description: "DevSidecar适合开发者加速GitHub与npm，Steam302专修Steam社区访问，WattToolkit功能最全，涵盖加速、账号管理与库存控制，按需选用。"
 ---
 # dev-sidecar
 

@@ -2,6 +2,7 @@
 title: 飞牛nas添加硬盘但不格式化的办法
 date: 2025-01-09 21:50:52
 tags:
+description: "通过systemd创建.mount单元，将已格式化的硬盘按UUID挂载到自定义目录，避免重新格式化，支持开机自动挂载且优先于docker服务。"
 ---
 # 一、使用lsblk列出所有块设备及其挂载点
 ```bash

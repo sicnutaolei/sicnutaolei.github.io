@@ -2,6 +2,7 @@
 title: vscode使用教程+快捷键记录
 date: 2025-01-09 22:26:30
 tags:
+description: "提供VS Code完整快捷键体系与通义灵码AI插件安装指南，涵盖多光标操作、调试、代码补全、自然语言生成代码及智能问答功能，助你高效配置开发环境。"
 ---
 ## 简介
 Visual Studio Code（简称VS Code）是由微软开发的一个现代化、轻量级的代码编辑器，它支持几十种主流编程语言（如 JavaScript、Python、C++、Java、Go 等），并通过扩展提供更广泛的语言支持。

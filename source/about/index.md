@@ -6,6 +6,11 @@ layout: about
 今天是一个新的开始。我打算开始写一些东西。找回曾经大学时用Hexo记录的习惯，希望能坚持下去。
 这个博客的目的是记录自己的学习过程，也希望能帮助到其他的人。
 我不是内容的生产者，只是一个内容的搬运工。
+
+## GitHub 贡献
+
+<div id="contrib-graph"></div>
+<script src="/js/contrib-graph.js"></script>
 如果侵犯到了您的权益，请联系我删除。
 此致。
         敬礼！

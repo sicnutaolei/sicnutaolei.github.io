@@ -2,6 +2,7 @@
 title: 开源免费的跨平台文件同步工具-Syncthing
 date: 2024-12-24 20:19:35
 tags:
+description: "Syncthing 是开源免费的跨平台P2P文件同步工具，支持多设备实时同步，无需内网穿透，适用于截图、书库、文档等数据同步，并支持版本控制与单向共享模式。"
 ---
 ## 开源免费的跨平台文件同步工具 - Syncthing
 ![软件截图](https://img.slarker.me/wiki/e310d62f71fd4b8eaf65461e6e437fb9.png)

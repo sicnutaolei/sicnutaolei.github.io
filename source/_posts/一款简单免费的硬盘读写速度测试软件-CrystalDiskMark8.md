@@ -2,6 +2,7 @@
 title: 一款简单免费的硬盘读写速度测试软件-CrystalDiskMark8
 date: 2024-12-24 20:19:24
 tags:
+description: "CrystalDiskMark8可免费测试硬盘读写速度，验证新硬盘性能是否达标，支持中文界面与二次元主题皮肤。"
 ---
 CrystalDiskMark 是一款简单免费的硬盘读写速度测试软件 ，新买的硬盘可以用它来测测你硬盘速度是否达标！
 ![CrystalDiskMark](https://www.ossnav.com/wp-content/uploads/2024/12/1733587050-maxiaobang_2024-12-07_23-57-19.webp)
