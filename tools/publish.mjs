@@ -3,9 +3,12 @@
 //   npm run publish -- -m "记录了 xxx"
 //   npm run publish -- --dry            # 只报告将要做什么，不写不推
 //   npm run publish -- --skip-ai --skip-contrib
+//   npm run publish -- --force          # 明知是草稿仍要发布
+//   npm run publish -- --min-body 200   # 调高草稿判定阈值（默认 60 字）
 // 摘要需要密钥，只从环境变量读取：
 //   $env:DOTS_API_KEY="<key>";  npm run publish -- -m "..."
 import { execFileSync, spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 const argv = process.argv.slice(2);
 const val = (f) => {
@@ -39,19 +42,41 @@ const git = (args, opts) => run("git", args, { readonly: args[0] === "status" ||
 
 // 1. 状态检查
 console.log("== 1/6 工作区状态");
-const status = execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim();
+// 用 -z：默认输出会把中文路径转义成八进制串，上一轮就是因此读错了文件名
+const raw = execFileSync("git", ["status", "--porcelain", "-z"], { encoding: "utf8" });
+const entries = raw.split("\0").filter(Boolean).map((rec) => ({
+  code: rec.slice(0, 2).trim(),
+  path: rec.slice(3),
+}));
+const status = entries.map((e) => `${e.code} ${e.path}`).join("\n");
 if (!status) {
-  console.log("没有待提交的改动。若是新文章，请先 hexo new 标题。");
+  console.log("没有待提交的改动。若是新文章，请先 npm run new -- 标题。");
   process.exit(0);
 }
 console.log(status.split("\n").map((l) => "  " + l).join("\n"));
 
-const postsDir = "source/_posts";
-const newPosts = status
-  .split("\n")
-  .filter((l) => l.includes(postsDir) && l.trim().startsWith("??"))
-  .map((l) => l.replace(/^\s*\S+\s+/, "").replace(/^"|"$/g, ""));
-console.log(`新文章 ${newPosts.length} 篇：${newPosts.join("、") || "无"}`);
+const POSTS = "source/_posts/";
+const touchedPosts = entries
+  .filter((e) => e.path.startsWith(POSTS) && e.path.endsWith(".md"))
+  .map((e) => e.path);
+
+// 正文（去掉 front-matter）太短就视为半成品，直接拦下：
+// git add -A 会把工作区一切提交，空模板被顺手发布的风险必须挡住
+const bodyLength = (p) => {
+  const text = readFileSync(p, "utf8").replace(/^---[\s\S]*?\n---\r?\n/, "");
+  return text.replace(/\s+/g, "").length;
+};
+const MIN_BODY = Number(val("--min-body") || 60);
+const unfinished = touchedPosts.filter((p) => bodyLength(p) < MIN_BODY);
+
+console.log(`涉及文章 ${touchedPosts.length} 篇：${touchedPosts.map((p) => p.slice(POSTS.length)).join("、") || "无"}`);
+if (unfinished.length && !has("--force")) {
+  console.error("\n中止：以下文章正文不足 " + MIN_BODY + " 字，像是没写完的草稿");
+  unfinished.forEach((p) => console.error(`  ${p}（正文 ${bodyLength(p)} 字）`));
+  console.error("\确认写完再发，或确实要发布草稿时加 --force。");
+  process.exit(1);
+}
+const newPosts = entries.filter((e) => e.path.startsWith(POSTS) && e.code === "??").map((e) => e.path);
 
 // 2. AI 摘要（脚本自身是增量的：只处理 front-matter 里还没有 description 的篇目）
 console.log("\n== 2/6 AI 摘要");

@@ -106,6 +106,12 @@ for (const f of files) {
     continue;
   }
   const body = raw.replace(/^---[\s\S]*?\n---\r?\n/, "");
+  const bodyChars = body.replace(/\s+/g, "").length;
+  if (bodyChars < 60) {
+    console.log(`跳过 ${f}（正文仅 ${bodyChars} 字，视为未写完的草稿，不做摘要）`);
+    skipped++;
+    continue;
+  }
   try {
     const { text, tokens } = await summarize(parsed.title, body);
     tokenTotal += tokens;
