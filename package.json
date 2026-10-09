@@ -8,7 +8,8 @@
     "deploy": "hexo deploy",
     "server": "hexo server",
     "gen:contrib": "node tools/gen-contrib.mjs",
-    "gen:ai": "node tools/gen-ai-summary.mjs"
+    "gen:ai": "node tools/gen-ai-summary.mjs",
+    "publish": "node tools/publish.mjs"
   },
   "hexo": {
     "version": "7.3.0"
