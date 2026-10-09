@@ -1,0 +1,132 @@
+name: 友链申请处理
+
+# 半自动：机器人只做校验和回帖，必须由站长打 approved 标签才会真正写入友链数据。
+# 写入后推送 hexo 分支，由 deploy.yml 自动重建站点。
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  handle:
+    runs-on: ubuntu-latest
+    # 已关闭的不处理；打标签事件只在「批准」时才跑，避免申请人贴别的标签时机器人重复回帖
+    if: github.event.action != 'closed' && (github.event.action != 'labeled' || contains(github.event.issue.labels.*.name, 'approved'))
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hexo
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci --no-audit --no-fund
+
+      - name: 保存 Issue 正文
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: printf '%s' "$BODY" > /tmp/issue.md
+
+      - name: 校验申请
+        id: check
+        run: |
+          set +e
+          out=$(node tools/friend-from-issue.mjs --body-file /tmp/issue.md 2>&1)
+          code=$?
+          echo "result<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$out" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: 探测站点可达性
+        if: steps.check.outputs.code == '0'
+        id: probe
+        run: |
+          set +e
+          url=$(grep -m1 -A2 '网站地址' /tmp/issue.md | grep -m1 -oE 'https?://[^[:space:]"<>]+')
+          status=$(curl -s -o /dev/null -w '%{http_code}' -L --max-time 20 -A 'Mozilla/5.0' "$url")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: 写回结论
+        uses: actions/github-script@v7
+        env:
+          CHECK: ${{ steps.check.outputs.result }}
+          CODE: ${{ steps.check.outputs.code }}
+          PURL: ${{ steps.probe.outputs.url }}
+          PSTATUS: ${{ steps.probe.outputs.status }}
+          APPROVED: ${{ contains(github.event.issue.labels.*.name, 'approved') }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issue = context.issue.issue_number;
+            const approved = process.env.APPROVED === 'true';
+            if (approved) return;            // 批准分支在下面单独回帖
+            const code = process.env.CODE;
+            let msg;
+            if (code === '0') {
+              const st = process.env.PSTATUS;
+              const reach = st && st !== '000'
+                ? `站点探测返回 HTTP ${st}`
+                : '站点探测失败（无法建立连接）';
+              msg = `校验通过，等待站长批准。\n\n- ${process.env.CHECK}\n- ${reach}\n- 申请地址：${process.env.PURL}\n\n` +
+                `站长添加 \`approved\` 标签后即自动上墙并重新构建；不打标签不会生效。`;
+            } else if (code === '4') {
+              msg = `重复申请：${process.env.CHECK}\n该站点已在友链列表中，无需再次提交。`;
+            } else {
+              msg = `校验未通过：${process.env.CHECK}\n\n请修正后重新提交，或在本 Issue 里补充说明。`;
+            }
+            await github.rest.issues.createComment({ owner, repo, issue_number: issue, body: msg });
+
+      - name: 批准并写入友链数据
+        if: contains(github.event.issue.labels.*.name, 'approved')
+        id: apply
+        run: |
+          set +e
+          out=$(node tools/friend-from-issue.mjs --body-file /tmp/issue.md --apply 2>&1)
+          code=$?
+          echo "$out"
+          echo "out=$out" >> "$GITHUB_OUTPUT"
+          exit $code
+
+      - name: 提交并推送
+        if: steps.apply.outputs.out != ''
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          name=$(grep -m1 -A2 '网站名称' /tmp/issue.md | tail -1 | tr -d '\r')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add source/_data/link.yml
+          if git diff --cached --quiet; then
+            echo "link.yml 无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "友链：加入「${name}」(#${ISSUE}) [skip ci]"
+          git pull --rebase --autostash origin hexo || true
+          git push "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/hexo
+
+      - name: 批准结果回帖并关闭
+        if: steps.apply.outputs.out != ''
+        uses: actions/github-script@v7
+        env:
+          APPLY_OUT: ${{ steps.apply.outputs.out }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issue = context.issue.issue_number;
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: issue,
+              body: `已批准并写入友链数据：${process.env.APPLY_OUT}\n\n站点会由部署 workflow 自动重建，稍后刷新友链页即可看到。`,
+            });
+            await github.rest.issues.update({ owner, repo, issue_number: issue, state: 'closed' });

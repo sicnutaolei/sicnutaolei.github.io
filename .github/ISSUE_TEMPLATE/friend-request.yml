@@ -1,0 +1,58 @@
+name: 申请友链
+description: 提交友情链接申请（机器人校验后需站长批准才会上墙）
+title: "友链申请："
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        流程说明：提交后机器人会校验地址格式、站点可达性和是否重复，把结论写在本 Issue 的评论里。
+        校验通过后，需要站长给它打上 `approved` 标签，条目才会写入友链数据并自动重新构建站点。
+        未打标签的申请不会上墙。
+
+  - type: input
+    id: site-name
+    attributes:
+      label: 网站名称
+      description: 显示在友链卡片上的名字，建议 20 字以内
+      placeholder: 小明的笔记
+    validations:
+      required: true
+
+  - type: input
+    id: site-url
+    attributes:
+      label: 网站地址
+      description: 必须带协议头
+      placeholder: "https://example.com"
+    validations:
+      required: true
+
+  - type: input
+    id: site-avatar
+    attributes:
+      label: 头像地址
+      description: 选填，留空则自动使用站点 favicon
+      placeholder: "https://example.com/logo.png"
+    validations:
+      required: false
+
+  - type: textarea
+    id: site-descr
+    attributes:
+      label: 一句话介绍
+      description: 最多 60 字，说清站点是做什么的
+      placeholder: 记录 homelab 和自托管实践
+    validations:
+      required: false
+
+  - type: dropdown
+    id: backlink
+    attributes:
+      label: 是否已放置回链
+      description: 本站不是无条件互链，请先在你的站点加上指向本站的链接
+      options:
+        - 已放置回链
+        - 尚未放置
+    validations:
+      required: true
