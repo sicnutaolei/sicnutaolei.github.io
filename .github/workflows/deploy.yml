@@ -41,6 +41,16 @@ jobs:
             echo "::warning::缺少 source/data/contrib.json，about 页热力图将不显示"
           fi
 
+      # 手机端（Markor）可以直接把文章推到本分支，绕过了本地的草稿闸，所以在这里再拦一次。
+      # 校验范围是全部文章而不是本次 diff：既避免 force-push 时取不到基线，也保证不变式长期成立。
+      - name: 草稿校验
+        run: node tools/check-drafts.mjs
+
+      # Markor 把图片存在 source/_posts/assets/，Hexo 需要它在 source/_posts/<文章名>/ 下。
+      # 这一步只复制不改写，副本已在 .gitignore 中排除。
+      - name: 图片资源归位
+        run: node tools/pull-post-assets.mjs
+
       - name: 构建站点
         run: npx hexo generate
 

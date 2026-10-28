@@ -5,3 +5,13 @@ db.json
 node_modules/
 public/
 .deploy*/
+
+# 构建期由 tools/pull-post-assets.mjs 生成的副本，可再生，不入库
+# （不要写成 source/_posts/*/ ，否则会把 Markor 的源图 assets/ 一起忽略）
+source/_posts/*/assets/
+
+# 编辑器与同步工具产物
+source/_posts/.obsidian/
+source/_posts/.template.md
+.stfolder/
+.stversions/

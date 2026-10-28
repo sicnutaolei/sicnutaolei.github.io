@@ -98,6 +98,7 @@ else run("node", ["tools/gen-contrib.mjs"]);
 console.log("\n== 4/6 本地构建自检");
 const HEXO = "node_modules/hexo-cli/bin/hexo";
 run("node", [HEXO, "clean"]);
+run("node", ["tools/pull-post-assets.mjs"]); // 手机端插入的图片需先归位到 _posts/<文章名>/
 run("node", [HEXO, "generate"]);
 
 // 5. 提交推送

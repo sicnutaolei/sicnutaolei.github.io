@@ -40,7 +40,9 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+# 开启后 source/_posts/<文章名>/ 会被当作该文章的资源目录。
+# 手机端（Markor）插入的图片由 tools/pull-post-assets.mjs 在构建前复制到这里。
+post_asset_folder: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -54,6 +56,12 @@ prismjs:
   preprocess: true
   line_number: true
   tab_replace: ''
+
+# hexo-renderer-marked 的资源解析。三者必须同时为真才会去查
+# source/_posts/<文章名>/<相对路径>：post_asset_folder + prependRoot + postAsset
+marked:
+  prependRoot: true
+  postAsset: true
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')

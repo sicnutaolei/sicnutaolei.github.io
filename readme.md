@@ -2,6 +2,8 @@
 
 **部署规范和日常操作流程见 [DEPLOY.md](DEPLOY.md)。** 一句话版本：写完文章跑 `npm run publish -- -m "说明"`，本地不要执行 `hexo g -d`。
 
+手机端（Markor + GitSync）的配置和发文约定也在 DEPLOY.md，见「在手机上发表」一节。
+
 ## 本机命令
 
 | 命令 | 作用 |
@@ -10,6 +12,7 @@
 | `npm run publish` | 一键发文：摘要 + 热力图数据 + 构建自检 + 推送 + 盯 CI |
 | `npm run gen:ai` | 只补文章 AI 摘要（增量，需 `DOTS_API_KEY` 环境变量） |
 | `npm run gen:contrib` | 只刷新关于页贡献热力图数据（需本机 `gh` 已登录） |
+| `npm run assets:fix` | 只把 `source/_posts/assets/` 里的图片归位到各文章目录（构建前会自动跑） |
 | `npm run server` | 本地预览 |
 | `npm run clean` / `npm run build` | 手动清理 / 构建（产物不提交） |
 

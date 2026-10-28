@@ -9,6 +9,7 @@
     "server": "hexo server",
     "deploy": "hexo deploy",
     "gen:contrib": "node tools/gen-contrib.mjs",
+    "assets:fix": "node tools/pull-post-assets.mjs",
     "gen:ai": "node tools/gen-ai-summary.mjs",
     "publish": "node tools/publish.mjs"
   },

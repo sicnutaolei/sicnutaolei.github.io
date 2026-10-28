@@ -9,6 +9,8 @@ on:
 permissions:
   contents: write
   issues: write
+  # 用 GITHUB_TOKEN 发起的 push 不会触发下游 workflow，必须显式 dispatch 才能让站点重建
+  actions: write
 
 jobs:
   handle:
@@ -115,6 +117,15 @@ jobs:
           git commit -m "友链：加入「${name}」(#${ISSUE}) [skip ci]"
           git pull --rebase --autostash origin hexo || true
           git push "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/hexo
+
+      # GITHUB_TOKEN 发起的 push 不会触发下游 workflow（GitHub 的防递归规则），
+      # 所以只靠 push 永远等不到 deploy.yml；提交信息里的 [skip ci] 只是双保险。
+      # workflow_dispatch 不受该限制约束，用它显式触发一次重建。
+      - name: 触发站点重建
+        if: steps.apply.outputs.out != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref hexo
 
       - name: 批准结果回帖并关闭
         if: steps.apply.outputs.out != ''
