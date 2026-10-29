@@ -40,6 +40,18 @@ npm run publish -- -m "记录了 xxx"
 
 没写 `description` 的文章不会渲染这个块，页面保持原样。这个目录是 Hexo 的自动加载目录且必须是 CommonJS，别往里塞 `.mjs`。
 
+### 封面规则
+
+优先级只有两级：**front-matter 里有 `cover:` 就用它；没有就按文章名哈希生成一个固定的 Picsum seed。**
+
+后者由 `scripts/cover-deterministic.js` 实现，注册在 `before_post_render` 且 **priority 9**——Hexo 里数值越小越先执行，必须抢在主题的 `random_cover`（默认 10）之前，否则主题会先塞一个随机值，我们就会把它误判成"用户自定义封面"而放行。这个过滤器对页面（about / link）也生效，因为主题的随机过滤器同样不区分 layout。
+
+封面值必须是**站点根相对路径**（如 `/img/covers/xxx.webp`）。主题渲染封面用的是 `url_for(article.cover)`，不像正文图片那样走 `postAsset` 解析，写成文件名会 404。
+
+桌面端上传封面时会把图**居中裁成 16:9（1200×675）**再压成 WebP，存到 `source/img/covers/`（共享目录，所以改文件名或改日期都不会让封面断链；代价是删文章不会自动清图）。
+
+注意：`_config.butterfly.yml` 里的 `default_cover` 列表平时**不会生效**，只是过滤器被移除时的兜底。想恢复"每次构建随机"的旧行为，删掉 `scripts/cover-deterministic.js` 即可。
+
 ### 草稿保护
 
 发布脚本内部用 `git add -A`，会把工作区里的一切一并提交，所以必须有这道闸：**凡本次涉及的文章，去掉 front-matter 后正文不足 60 字的直接中止**，并列出是哪几篇、各有多少字。确实要发布草稿时再加 `--force`，阈值可用 `--min-body 200` 调高。`npm run gen:ai` 里有同样判定，不会给空草稿白烧 tokens。

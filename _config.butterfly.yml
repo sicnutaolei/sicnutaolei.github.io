@@ -113,9 +113,9 @@ cover:
   # 选择: left/right/both
   position: both
   # 当未设置封面时，显示默认封面
-  # 使用 Lorem Picsum 的 seed 模式：同一 seed 永远返回同一张图，可被浏览器长期缓存，
-  # 卡片与文章头图不会每次刷新都变；不同 seed 之间则是完全不同的图。
-  # 尺寸 1200/675 即 16:9，与主题封面比例一致，由服务端裁切，无需自己处理。
+  # 注意：这个列表平时**不会生效**。scripts/cover-deterministic.js 会在主题之前
+  # 按文章名哈希写入一个固定的 Picsum seed；这里只是万一那个过滤器被移除时的兜底。
+  # 想恢复"每次构建随机"的旧行为，删掉该脚本即可。
   default_cover:
   - https://picsum.photos/seed/taonote-01/1200/675
   - https://picsum.photos/seed/taonote-02/1200/675
